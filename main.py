@@ -3,7 +3,7 @@ import db.db_conn as db_setup
 import services.stock_search as stock_search
 import bson.json_util as json_util
 from fastapi import websockets, WebSocket ,WebSocketDisconnect
-from models import stock_users_model
+from models import users
 
 app = FastAPI()
 
@@ -33,8 +33,8 @@ async def stock_search_by_name_ws(webs: WebSocket):
 
 
 @app.post("/new-user/register")
-def new_user(user_details: stock_users_model.User):
-    created = stock_users_model.insert_new_user(user_details)
+def new_user(user_details: users.User):
+    created = users.insert_new_user(user_details)
     if created is not None:
         return json_util._json_convert({
             "error" : False,
