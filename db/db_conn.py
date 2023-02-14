@@ -12,7 +12,6 @@ def connect_db():
 
         db = client.get_database("unigo")
         c.Config.db_collections.append(db.list_collection_names())
-        print("Connection to DB was successfull !")
         return db
 
     except errors.PyMongoError:
