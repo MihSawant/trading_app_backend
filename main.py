@@ -3,7 +3,7 @@ import db.db_conn as db_setup
 import services.stock_search as stock_search
 import bson.json_util as json_util
 from fastapi import websockets, WebSocket ,WebSocketDisconnect
-from models import users
+from models import users, stock_users
 
 app = FastAPI()
 
@@ -40,3 +40,7 @@ def new_user(user_details: users.User):
             "error" : False,
             "message" : "User Registered Successfully"
         })
+
+@app.post("/user/add-watchlist")
+def stock_user_insert(stock_data: stock_users.Stock_User):
+  print(stock_data)
