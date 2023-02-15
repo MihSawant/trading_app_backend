@@ -2,6 +2,7 @@ import db.db_conn as db_conn
 import configs.conf as c
 from pydantic import BaseModel, validator, ValidationError
 import bcrypt
+from bson.objectid import ObjectId
 import services.check_pno as check_pno
 import bson.json_util as json_util
 
@@ -33,6 +34,9 @@ class User_Check_Pno(BaseModel):
 class User_Login(BaseModel):
     phone_no: str
     pin: str
+
+class User_Access(BaseModel):
+    user_id: str
     
 def insert_new_user(user_details: User): 
     user_count = check_pno.find_user_by_pno(user_details)
@@ -58,3 +62,5 @@ def insert_new_user(user_details: User):
         "last_name" : user_data_to_return["last_name"]
     })
 
+def find_by_id(user_id):
+    return users.find_one({"_id" : ObjectId(user_id)})
