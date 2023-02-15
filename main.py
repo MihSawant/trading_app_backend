@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 import db.db_conn as db_setup
-import services.stock_search as stock_search
-import services.check_pno as check_pno
+from services import stock_search, check_pno, user_login
 import bson.json_util as json_util
 from fastapi import websockets, WebSocket ,WebSocketDisconnect
 from models import users, stock_users
@@ -34,12 +33,8 @@ async def stock_search_by_name_ws(webs: WebSocket):
 
 @app.post("/new-user/register")
 def new_user(user_details: users.User):
-    created = users.insert_new_user(user_details)
-    if created is not None:
-        return json_util._json_convert({
-            "error" : False,
-            "message" : "User Registered Successfully"
-        })
+    response = users.insert_new_user(user_details)
+    return response
 
 @app.post("/user/add-watchlist")
 def stock_user_insert(stock_data: stock_users.Stock_User):
@@ -50,3 +45,7 @@ def check_if_user_exists(phone_no: users.User_Check_Pno):
     return json_util._json_convert({
         "code" : check_pno.find_user_by_pno(phone_no)
     })
+
+@app.post("/user/login")
+def login(data : users.User_Login):
+    return user_login.verify_pin(data)
