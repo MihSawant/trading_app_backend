@@ -52,6 +52,7 @@ def insert_new_user(user_details: User):
         val = users.insert_one(user_data_enc)
     user_data_to_return = users.find_one({"_id" : val.inserted_id})
     return json_util._json_convert({
+        "error" : False,
         "id" : user_data_to_return["_id"],
         "first_name" : user_data_to_return["first_name"],
         "last_name" : user_data_to_return["last_name"]
