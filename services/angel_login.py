@@ -27,20 +27,23 @@ if doc is not None:
   resp = requests.post("https://apiconnect.angelbroking.com/rest/auth/angelbroking/jwt/v1/generateTokens", 
   headers=headers, json=payload)
   a_resp = resp.json()['data']
-  if resp.status_code == 200:
-    auths.update_one({"name" : "angel"}, 
-    {"$set" : 
-      {
-      "refreshToken" : a_resp['refreshToken'],
-      "jwtToken" : a_resp['jwtToken'],
-      "feedToken" : a_resp['feedToken'],
-      "last_updated": str(datetime.datetime.now()) 
-      }
-    }
-    )
-    print("TOKEN IS SET..")
+  if a_resp is None:
+    print("Response Is None")
   else:
-    print(json.dumps({
-      "status" : resp.status_code,
-      "message" : resp.text
-    }))
+    if a_resp['status'] == True:
+      auths.update_one({"name" : "angel"}, 
+      {"$set" : 
+        {
+        "refreshToken" : a_resp['refreshToken'],
+        "jwtToken" : a_resp['jwtToken'],
+        "feedToken" : a_resp['feedToken'],
+        "last_updated": str(datetime.datetime.now()) 
+        }
+      }
+      )
+      print("TOKEN IS SET..")
+    else:
+      print(json.dumps({
+        "status" : a_resp['errcode'],
+        "message" : a_resp['message']
+      }))
