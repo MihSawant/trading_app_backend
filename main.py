@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import db.db_conn as db_setup
-from services import stock_search, check_pno, user_login, angel_login
+from services import stock_search, check_pno, user_login
 import bson.json_util as json_util
 from fastapi import websockets, WebSocket ,WebSocketDisconnect
 from models import users, stock_users
