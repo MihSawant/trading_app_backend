@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import db.db_conn as db_setup
 import services.stock_search as stock_search
+import services.check_pno as check_pno
 import bson.json_util as json_util
 from fastapi import websockets, WebSocket ,WebSocketDisconnect
 from models import users, stock_users
@@ -9,7 +10,6 @@ app = FastAPI()
 print("application startup was successfull...")
 # first connect to db
 # db_setup.connect_db()
-
 @app.get("/")
 def hello():
     return {"message" : "Welcome !"}
@@ -44,3 +44,9 @@ def new_user(user_details: users.User):
 @app.post("/user/add-watchlist")
 def stock_user_insert(stock_data: stock_users.Stock_User):
   print(stock_data)
+
+@app.post("/user/index")
+def check_if_user_exists(phone_no: users.User_Check_Pno):
+    return json_util._json_convert({
+        "code" : check_pno.find_user_by_pno(phone_no)
+    })
