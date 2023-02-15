@@ -38,7 +38,7 @@ def new_user(user_details: users.User):
 
 @app.post("/user/add-watchlist")
 def stock_user_insert(stock_data: stock_users.Stock_User):
-  print(stock_data)
+    stock_users.insert_favourite_stock(stock_data)
 
 @app.post("/user/index")
 def check_if_user_exists(phone_no: users.User_Check_Pno):
