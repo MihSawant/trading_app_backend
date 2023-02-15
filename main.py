@@ -6,7 +6,7 @@ from fastapi import websockets, WebSocket ,WebSocketDisconnect
 from models import users, stock_users
 
 app = FastAPI()
-
+print("application startup was successfull...")
 # first connect to db
 # db_setup.connect_db()
 
