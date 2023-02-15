@@ -4,6 +4,7 @@ from services import stock_search, check_pno, user_login
 import bson.json_util as json_util
 from fastapi import websockets, WebSocket ,WebSocketDisconnect
 from models import users, stock_users
+import uvicorn
 
 app = FastAPI()
 print("application startup was successfull...")
@@ -49,3 +50,6 @@ def check_if_user_exists(phone_no: users.User_Check_Pno):
 @app.post("/user/login")
 def login(data : users.User_Login):
     return user_login.verify_pin(data)
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8090, log_level="info")
