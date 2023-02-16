@@ -22,15 +22,15 @@ if doc is not None:
     'X-ClientLocalIP': '192.168.1.9',
     'X-ClientPublicIP': '192.168.1.9',
     'X-MACAddress': '1c:57:dc:81:35:b8',
-    'X-PrivateKey': doc['feedToken']
+    'X-PrivateKey': doc['api_key']
   }
   resp = requests.post("https://apiconnect.angelbroking.com/rest/auth/angelbroking/jwt/v1/generateTokens", 
   headers=headers, json=payload)
   a_resp = resp.json()['data']
   if a_resp is None:
-    print("Response Is None")
+    print(resp.json())
   else:
-    if a_resp['status'] == True:
+    if resp.json()['status'] == True:
       auths.update_one({"name" : "angel"}, 
       {"$set" : 
         {
