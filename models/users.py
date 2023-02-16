@@ -55,8 +55,16 @@ def insert_new_user(user_details: User):
             "pin" : enc_pin,
             "uid" : str(uuid.uuid4())
         }
+        
         val = users.insert_one(user_data_enc)
+    dmat_user = db.get_collection("dmat_user")
     user_data_to_return = users.find_one({"_id" : val.inserted_id})
+    dmat_user.insert_one({
+        "dmat_id" : str(uuid.uuid4()),
+        "balance" : 1000000,
+        "uid" : user_data_to_return["uid"]
+    })
+
     return json_util._json_convert({
         "error" : False,
         "uid" : user_data_to_return["uid"],
