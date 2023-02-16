@@ -65,15 +65,15 @@ def check_user_access(data: users.User_Access):
     return json_util._json_convert(user_access.check_access(data.uid))
 # print(stock_history.get_history())
 
-@app.post("/trade/place/order")
+@app.post("/trade/place/order", tags=["Trade"])
 def place_order(order: users_orders.User_Order):
     return users_orders.insert_new_order(order)
 
-@app.post("/user/portfolio")
+@app.post("/user/portfolio", tags=["View Portfolio"])
 def get_portfolio(data : users_orders.Portfolio):
     return json_util._json_convert(users_orders.get_info(data.uid))
 
-@app.post("/user/get-balance")
+@app.post("/user/get-balance", tags=["View Balance"])
 def get_user_balance(data: users_orders.Balance):
     return json_util._json_convert(users_orders.find_balance_of_user(data.uid))
 if __name__ == "__main__":
