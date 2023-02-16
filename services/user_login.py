@@ -18,7 +18,7 @@ def verify_pin(user_details: user_models.User_Login):
             return json_util._json_convert(
             {
                 "error" : False,
-                "id" : user["_id"],
+                "uid" : user["uid"],
                 "first_name" : user["first_name"],
                 "last_name" : user["last_name"]
             })

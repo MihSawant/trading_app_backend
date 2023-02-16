@@ -5,6 +5,7 @@ import bcrypt
 from bson.objectid import ObjectId
 import services.check_pno as check_pno
 import bson.json_util as json_util
+import uuid
 
 db = db_conn.connect_db()
 
@@ -51,13 +52,14 @@ def insert_new_user(user_details: User):
             "first_name" : user_details.first_name,
             "last_name" : user_details.last_name,
             "phone_no" : user_details.phone_no,
-            "pin" : enc_pin
+            "pin" : enc_pin,
+            "uid" : str(uuid.uuid4())
         }
         val = users.insert_one(user_data_enc)
     user_data_to_return = users.find_one({"_id" : val.inserted_id})
     return json_util._json_convert({
         "error" : False,
-        "id" : val.inserted_id,
+        "uid" : user_data_to_return["uid"],
         "first_name" : user_data_to_return["first_name"],
         "last_name" : user_data_to_return["last_name"]
     })
