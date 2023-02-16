@@ -56,7 +56,7 @@ def login(data : users.User_Login):
 
 @app.post("/user/favourite-stocks")
 async def get_favourite_stocks_by_user_id(data: stock_users.Favourite_Stock):
-    return await stock_users.find_stocks_details_by_user_id(data.user_id)
+    return await stock_users.find_stocks_details_by_user_id(data.uid)
 
 @app.post("/user/check-login-access")
 def check_user_access(data: users.User_Access):
