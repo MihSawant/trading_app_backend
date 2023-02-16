@@ -1,6 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Response
 import db.db_conn as db_setup
-from services import stock_search, check_pno, user_login, user_access, angel_login
+from services import stock_search, check_pno, user_login, user_access, stock_history
 import bson.json_util as json_util
 from fastapi import websockets, WebSocket ,WebSocketDisconnect
 from models import users, stock_users
@@ -61,6 +61,6 @@ async def get_favourite_stocks_by_user_id(data: stock_users.Favourite_Stock):
 @app.post("/user/check-login-access")
 def check_user_access(data: users.User_Access):
     return json_util._json_convert(user_access.check_access(data.user_id))
-
+print(stock_history.get_history())
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8090, log_level="info")

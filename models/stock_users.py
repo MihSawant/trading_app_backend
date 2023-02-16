@@ -10,7 +10,7 @@ db = db_conn.connect_db()
 stock_users = db.get_collection("stocks_users")
 
 class Stock_User(BaseModel):
-    stock_ids : typing.List
+    token_names : typing.List
     uid : str
 
 class Favourite_Stock(BaseModel):
@@ -22,7 +22,7 @@ def insert_favourite_stock(stock_user_data : Stock_User):
     uid = stock_user_data.uid
     if find_favourite_stocks_by_user_id(uid) is None:
         data =  stock_users.insert_one({
-            "stock_ids" : stock_user_data.stock_ids,
+            "stock_names" : stock_user_data.token_names,
             "uid" : stock_user_data.uid
         })
         print(data.inserted_id)
@@ -30,8 +30,8 @@ def insert_favourite_stock(stock_user_data : Stock_User):
        fav_stocks = find_favourite_stocks_by_user_id(uid)
        print(fav_stocks)
        return stock_users.update_one(
-        {"uid" : stock_user_data.user_id},
-        { "$set" : {"stock_ids" : stock_user_data.stock_ids}})
+        {"uid" : stock_user_data.uid},
+        { "$set" : {"stock_names" : stock_user_data.token_names}})
     
    
 
@@ -47,7 +47,8 @@ async def find_stocks_details_by_user_id(uid):
     stock_details = []
 
     stocks = list(itertools.chain.from_iterable(fav_stocks_list.values()))
+    print(fav_stocks_list)
     for stock in stocks:
-      stock_details.append(await stock_search.find_by_id(ObjectId(stock)))
+      stock_details.append(await stock_search.find_by_name(stock))
     
     return json_util._json_convert(stock_details)

@@ -12,3 +12,7 @@ def find_all_stocks():
 async def find_by_id(stock_id):
     return stocks.find_one({"_id" : stock_id}, 
     {"_id":0, "expiry":0, "lotsize":0, "instrumenttype":0, "tick_size" :0, "strike":0})
+
+async def find_by_name(stock_name):
+    return stocks.find_one({"token" : stock_name}, 
+    {"_id":0, "expiry":0, "lotsize":0, "instrumenttype":0, "tick_size" :0, "strike":0})
