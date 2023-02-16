@@ -80,7 +80,7 @@ def insert_new_order(order: User_Order):
             })
             if user_transaction['type'] == "Buy":
                 amt = balance_amount - user_transaction['amount']
-                if amt > price:
+                if price > balance_amount:
                     json_util._json_convert({
                         "error" : True,
                         "message" : "Not Have Enough Funds !"
