@@ -22,6 +22,8 @@ class User_Order(BaseModel):
     
 class Portfolio(BaseModel):
     uid : str
+class Balance(BaseModel):
+    uid: str
 
 
 def insert_new_order(order: User_Order):
@@ -127,5 +129,6 @@ def insert_new_order(order: User_Order):
 def get_info(uid):
     return portfolio.find({"uid" : uid}, {"_id":0})
 
-            
+def find_balance_of_user(uid):
+    return user_dmat.find({"uid" : uid}, {"_id":0, "uid":0, "dmat_id":0})        
             

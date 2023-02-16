@@ -73,5 +73,8 @@ def place_order(order: users_orders.User_Order):
 def get_portfolio(data : users_orders.Portfolio):
     return json_util._json_convert(users_orders.get_info(data.uid))
 
+@app.post("/user/get-balance")
+def get_user_balance(data: users_orders.Balance):
+    return json_util._json_convert(users_orders.find_balance_of_user(data.uid))
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8090, log_level="info")
