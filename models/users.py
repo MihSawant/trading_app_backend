@@ -37,7 +37,7 @@ class User_Login(BaseModel):
     pin: str
 
 class User_Access(BaseModel):
-    user_id: str
+    uid: str
     
 def insert_new_user(user_details: User): 
     user_count = check_pno.find_user_by_pno(user_details)
@@ -66,3 +66,6 @@ def insert_new_user(user_details: User):
 
 def find_by_id(user_id):
     return users.find_one({"_id" : ObjectId(user_id)})
+
+def find_by_uid(uid):
+    return users.find_one({"uid" : uid})
