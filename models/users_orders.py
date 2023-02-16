@@ -131,4 +131,6 @@ def get_info(uid):
 
 def find_balance_of_user(uid):
     return user_dmat.find({"uid" : uid}, {"_id":0, "uid":0, "dmat_id":0})        
-            
+
+def find_order_by_uid(uid):
+    return orders.find({"uid": uid}, {"_id":0})     
