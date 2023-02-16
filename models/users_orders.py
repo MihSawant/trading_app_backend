@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import uuid
 import datetime
 import bson.json_util as json_util
+import services.stock_search as stock_search
 
 db = db_conn.connect_db()
 
@@ -104,9 +105,12 @@ def insert_new_order(order: User_Order):
                 pos = True
             else:
                 pos = False
+            
+            stock_name = stock_search.find_by_name(user_order['token'])
             portfolio.insert_one({
                 "uid" : user_order['uid'],
                 "token": user_order['token'],
+                "name" : stock_name['name'],  
                 "buy_rate" : user_order['buy_rate'],
                 "position" : pos,
                 "sell_rate" : user_order['sell_rate'],
