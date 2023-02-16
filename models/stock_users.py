@@ -45,7 +45,11 @@ def find_favourite_stocks_by_user_id(uid):
 async def find_stocks_details_by_user_id(uid):
     fav_stocks_list = stock_users.find_one({"uid" : uid}, {"_id":0, "uid":0})
     stock_details = []
-
+    if fav_stocks_list is None:
+        return json_util._json_convert({
+            "error" : True,
+            "message" : "User Not Found !"
+        })
     stocks = list(itertools.chain.from_iterable(fav_stocks_list.values()))
     print(fav_stocks_list)
     for stock in stocks:
