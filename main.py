@@ -5,7 +5,7 @@ from services import stock_search, check_pno, user_login, user_access
 # from services import angel_login
 import bson.json_util as json_util
 from fastapi import websockets, WebSocket ,WebSocketDisconnect
-from models import users, stock_users
+from models import users, stock_users, users_orders
 import uvicorn
 
 app = FastAPI(
@@ -64,5 +64,14 @@ async def get_favourite_stocks_by_user_id(data: stock_users.Favourite_Stock):
 def check_user_access(data: users.User_Access):
     return json_util._json_convert(user_access.check_access(data.uid))
 # print(stock_history.get_history())
+
+@app.post("/trade/place/order")
+def place_order(order: users_orders.User_Order):
+    return users_orders.insert_new_order(order)
+
+@app.post("/user/portfolio")
+def get_portfolio(data : users_orders.Portfolio):
+    return json_util._json_convert(users_orders.get_info(data.uid))
+
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8090, log_level="info")
