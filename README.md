@@ -18,6 +18,7 @@ Trading App Backend - (Elan and nVision) Hackathon
      pip install -r requirements.txt 
   
   For Running the application 
+  
      python main.py
 
 ## You can access the Docs for the API Docs at:
