@@ -1,4 +1,4 @@
-fastapi==0.92.0
+fastapi==0.109.1
 pydantic==1.9.0
 pymongo==4.3.3
 bcrypt==4.0.1
